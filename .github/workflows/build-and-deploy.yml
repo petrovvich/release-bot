@@ -29,5 +29,19 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           port: 22
           source: "release-bot.jar"
-          target: "/opt/release-bot/source"
-
+          target: "/opt/release-bot"
+      - name: Restart Service
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_IP_ADDRESS }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          port: 22
+          script: |
+            sudo /etc/init.d/release-bot stop
+            mv /opt/release-bot/release-bot.jar /opt/release-bot/release-bot-old.jar
+            mv /opt/release-bot/release-bot-latest.jar /opt/release-bot/release-bot.jar
+            sudo rm -rf /etc/init.d/release-bot
+            sudo ln -s -f /opt/release-bot/release-bot.jar /etc/init.d/release-bot
+            sudo /etc/init.d/release-bot start
+            rm /opt/release-bot/release-bot-old.jar
