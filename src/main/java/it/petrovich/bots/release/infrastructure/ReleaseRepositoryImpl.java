@@ -31,7 +31,7 @@ public class ReleaseRepositoryImpl implements ReleaseRepository {
 
     @Override
     public void save(ReleaseInfoEntity newRelease) {
-        releaseInfoRepo.save(newRelease);
+        releaseInfoRepo.saveAndFlush(newRelease);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class ReleaseRepositoryImpl implements ReleaseRepository {
         final var found = releaseInfoRepo.findById(releaseId);
         if (found.isPresent()) {
             found.get().setState(state);
-            releaseInfoRepo.save(found.get());
+            releaseInfoRepo.saveAndFlush(found.get());
         }
     }
 }
