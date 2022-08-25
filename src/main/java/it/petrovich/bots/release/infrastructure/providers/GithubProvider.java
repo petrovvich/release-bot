@@ -30,6 +30,7 @@ public class GithubProvider implements Provider {
                 .get()
                 .getElementsByAttributeValueContaining("href", "/tag/")
                 .stream()
+                .filter(element -> !"Notes".contains(element.text()))
                 .map(element -> new ReleaseInfoEntity(sourceType, buildUrl(requestUrl, element), element.text()))
                 .toList();
     }

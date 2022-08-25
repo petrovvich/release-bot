@@ -42,6 +42,8 @@ public class ReleaseInfoEntity {
     private SourceType type;
     private String releaseUrl;
     private String version;
+    @Enumerated(EnumType.STRING)
+    private NotificationState state;
 
     public ReleaseInfoEntity(SourceType type, String releaseUrl, String version) {
         this.type = type;

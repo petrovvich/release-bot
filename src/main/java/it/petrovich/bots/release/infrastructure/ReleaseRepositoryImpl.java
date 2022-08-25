@@ -1,5 +1,6 @@
 package it.petrovich.bots.release.infrastructure;
 
+import it.petrovich.bots.release.infrastructure.model.NotificationState;
 import it.petrovich.bots.release.infrastructure.model.ReleaseInfoEntity;
 import it.petrovich.bots.release.infrastructure.model.SourceConfigEntity;
 import it.petrovich.bots.release.infrastructure.repo.ReleaseInfoSpringJpaRepo;
@@ -14,7 +15,7 @@ import java.util.UUID;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class RepositoryImpl implements Repository {
+public class ReleaseRepositoryImpl implements ReleaseRepository {
     private final ReleaseInfoSpringJpaRepo releaseInfoRepo;
     private final SourceConfigSpringJpaRepo sourceConfigRepo;
 
@@ -24,12 +25,21 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
-    public Collection<String> getReleases(UUID configId) {
-        return releaseInfoRepo.findReleases(configId);
+    public Collection<String> getReleases(UUID configId, NotificationState state) {
+        return releaseInfoRepo.findReleases(configId, state);
     }
 
     @Override
     public void save(ReleaseInfoEntity newRelease) {
         releaseInfoRepo.save(newRelease);
+    }
+
+    @Override
+    public void update(UUID releaseId, NotificationState state) {
+        final var found = releaseInfoRepo.findById(releaseId);
+        if (found.isPresent()) {
+            found.get().setState(state);
+            releaseInfoRepo.save(found.get());
+        }
     }
 }
