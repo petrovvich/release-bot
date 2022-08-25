@@ -84,3 +84,6 @@ databaseChangeLog:
                   type: varchar(255)
                   constraints:
                     nullable: false
+              - column:
+                  name: state
+                  type: varchar(50)
