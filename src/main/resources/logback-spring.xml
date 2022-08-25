@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="30 minutes">
+    <springProperty name="SERVICE_NAME" source="log.service.name"/>
+    <property name="HOSTNAME" value="${HOSTNAME}"/>
+
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <jsonGeneratorDecorator class="net.logstash.logback.decorate.PrettyPrintingJsonGeneratorDecorator"/>
+            <encoding>UTF-8</encoding>
+            <providers>
+                <timestamp>
+                    <fieldName>time</fieldName>
+                    <pattern>yyyy-dd-MM'T'HH:mm:ss.SSSZ</pattern>
+                </timestamp>
+                <pattern>
+                    <pattern>
+                        {
+                        "app": "${SERVICE_NAME}",
+                        "host": "${HOSTNAME}",
+                        "level": "%level",
+                        "class": "%class{0}.%M:%L",
+                        "log": "#tryJson{%msg}",
+                        "error": "%xEx{full}"
+                        }
+                    </pattern>
+                </pattern>
+            </providers>
+        </encoder>
+    </appender>
+
+    <springProfile name="!prod">
+        <logger name="it.petrovich" level="debug" additivity="false">
+            <appender-ref ref="stdout"/>
+        </logger>
+        <logger name="org.springframework" level="error" additivity="false">
+            <appender-ref ref="stdout"/>
+        </logger>
+        <root level="off">
+            <appender-ref ref="stdout"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="prod">
+        <logger name="it.petrovich" level="info" additivity="false">
+            <appender-ref ref="stdout"/>
+        </logger>
+    </springProfile>
+</configuration>

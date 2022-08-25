@@ -1,0 +1,40 @@
+spring:
+  jmx:
+    enabled: false
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:0.0.0.0}/release
+    driver-class-name: org.postgresql.Driver
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    hikari:
+      maximum-pool-size: 10
+      connection-timeout: 15000
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format-sql: true
+        default_schema: public
+        physical_naming_strategy: com.vladmihalcea.hibernate.type.util.CamelCaseToSnakeCaseNamingStrategy
+        implicit_naming_strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+  liquibase:
+    enabled: true
+    change-log: db/changelog/db.changelog-master.yaml
+
+log:
+  service:
+    name: release-bot
+
+release:
+  cron: 0 */1 * * * * # each minute
+
+notification:
+  cron: 0 */1 * * * * # each minute
+  telegram:
+    releases:
+      token: ${BOT_TOKEN}
+      username: ${BOT_USERNAME}
+      chats: ${TG_CHATS}
