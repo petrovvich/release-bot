@@ -39,9 +39,9 @@ jobs:
           port: 22
           script: |
             sudo /etc/init.d/release-bot stop
-            mv /opt/release-bot/release-bot.jar /opt/release-bot/release-bot-old.jar
-            mv /opt/release-bot/release-bot-latest.jar /opt/release-bot/release-bot.jar
+            mv /opt/release-bot/source/release-bot.jar /opt/release-bot/source/release-bot-old.jar
+            mv /opt/release-bot/source/release-bot-latest.jar /opt/release-bot/source/release-bot.jar
             sudo rm -rf /etc/init.d/release-bot
-            sudo ln -s -f /opt/release-bot/release-bot.jar /etc/init.d/release-bot
+            sudo ln -s -f /opt/release-bot/source/release-bot.jar /etc/init.d/release-bot
             sudo /etc/init.d/release-bot start
-            rm /opt/release-bot/release-bot-old.jar
+            rm /opt/release-bot/source/release-bot-old.jar
