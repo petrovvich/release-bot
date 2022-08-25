@@ -34,7 +34,7 @@ public class ReleaseScheduler {
             if (provider == null) {
                 throw new ProviderNotFoundException(config.getType());
             }
-            final var releases = releaseRepository.getReleases(config.getId(), NotificationState.NEW);
+            final var releases = releaseRepository.getReleases(config.getId());
             final var releaseInfo = provider.retrieve(config.getUrl());
             for (ReleaseInfoEntity newRelease : releaseInfo) {
                 if (!releases.contains(newRelease.getVersion())) {
