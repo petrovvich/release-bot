@@ -32,7 +32,7 @@ release:
   cron: 0 */1 * * * * # each minute
 
 notification:
-  cron: 0 */1 * * * * # each minute
+  cron: "*/30 * * * * *" # each 30 seconds
   telegram:
     releases:
       token: ${BOT_TOKEN}
