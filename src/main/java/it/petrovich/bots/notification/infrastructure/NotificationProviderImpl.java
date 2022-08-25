@@ -19,8 +19,10 @@ public class NotificationProviderImpl implements NotificationProvider {
 
     @Override
     public void push(ReleaseNotification newRelease) {
-        QUEUE.add(newRelease);
-        releaseRepository.update(newRelease.releaseId(), NotificationState.PREPARED);
+        if (!QUEUE.contains(newRelease)) {
+            QUEUE.add(newRelease);
+            releaseRepository.update(newRelease.releaseId(), NotificationState.PREPARED);
+        }
     }
 
     @Override

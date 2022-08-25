@@ -25,8 +25,18 @@ public class ReleaseRepositoryImpl implements ReleaseRepository {
     }
 
     @Override
+    public SourceConfigEntity getConfig(UUID id) {
+        return sourceConfigRepo.findById(id).get();
+    }
+
+    @Override
     public Collection<String> getReleases(UUID configId) {
         return releaseInfoRepo.findReleases(configId);
+    }
+
+    @Override
+    public Collection<ReleaseInfoEntity> getReleases(NotificationState notificationState) {
+        return releaseInfoRepo.findReleases(notificationState.name(), 20);
     }
 
     @Override

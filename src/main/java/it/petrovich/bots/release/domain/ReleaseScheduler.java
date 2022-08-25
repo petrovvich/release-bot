@@ -27,6 +27,7 @@ public class ReleaseScheduler {
 
     @Scheduled(cron = "${release.cron}")
     public void updateRelease() {
+        log.debug("Begin update release info");
         final var configs = releaseRepository.getConfigs();
 
         for (SourceConfigEntity config : configs) {
@@ -48,5 +49,18 @@ public class ReleaseScheduler {
                 }
             }
         }
+        log.debug("End update release info");
+    }
+
+    @Scheduled(cron = "${release.cron}")
+    public void rescheduleNotification() {
+        log.debug("Begin reschedule notifications");
+        releaseRepository.getReleases(NotificationState.PREPARED)
+                .forEach(release -> {
+                    final var config = releaseRepository.getConfig(release.getConfigId());
+                    notificationProvider.push(new ReleaseNotification(release.getId(), config.getLibraryName(),
+                            release.getType(), release.getVersion(), release.getReleaseUrl()));
+                });
+        log.debug("End reschedule notifications");
     }
 }

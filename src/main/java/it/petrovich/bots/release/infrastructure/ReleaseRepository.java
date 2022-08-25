@@ -10,7 +10,11 @@ import java.util.UUID;
 public interface ReleaseRepository {
     Collection<SourceConfigEntity> getConfigs();
 
+    SourceConfigEntity getConfig(UUID id);
+
     Collection<String> getReleases(UUID configId);
+
+    Collection<ReleaseInfoEntity> getReleases(NotificationState notificationState);
 
     void save(ReleaseInfoEntity newRelease);
 
