@@ -18,7 +18,8 @@ jobs:
           java-version: 17
 
       - name: Build jar
-        run: mvn clean package
+        run: |
+          mvn clean package && cp target/release-bot.jar release-bot.jar
 
       - name: Upload application
         uses: appleboy/scp-action@master
@@ -27,6 +28,6 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           port: 22
-          source: "./target/release-bot.jar"
+          source: "release-bot.jar"
           target: "/opt/release-bot/source"
 
