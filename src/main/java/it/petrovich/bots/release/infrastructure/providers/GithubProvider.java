@@ -31,6 +31,7 @@ public class GithubProvider implements Provider {
                 .getElementsByAttributeValueContaining("href", "/tag/")
                 .stream()
                 .filter(element -> !"Notes".contains(element.text()))
+                .filter(element -> !"Downloads".contains(element.text()))
                 .map(element -> new ReleaseInfoEntity(sourceType, buildUrl(requestUrl, element), element.text()))
                 .toList();
     }

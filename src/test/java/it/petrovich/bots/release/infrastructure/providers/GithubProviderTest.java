@@ -14,7 +14,7 @@ class GithubProviderTest {
     @Test
     @Disabled
     void testRetrieve() {
-        final var links = githubProvider.retrieve("https://github.com/google/guava/tags");
+        final var links = githubProvider.retrieve("https://github.com/quarkusio/quarkus/tags");
         assertNotNull(links);
         assertEquals(10, links.size());
     }
