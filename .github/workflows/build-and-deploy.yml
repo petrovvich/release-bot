@@ -8,22 +8,21 @@ on:
 jobs:
   build:
     name: Build executable jar
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
       - name: Setup jdk17
         uses: oracle-actions/setup-java@v1
         with:
           website: jdk.java.net
-          release: 17
+          release: 17.0.1
       - name: Build jar
         run: mvn package
 
   publish:
     name: Publish - GitHub Packages
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     needs: [build]
-
     steps:
       - uses: actions/checkout@v1
       - name: Setup jdk17
