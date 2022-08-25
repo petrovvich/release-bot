@@ -9,11 +9,11 @@ import java.util.Collection;
 import java.util.UUID;
 
 public interface ReleaseInfoSpringJpaRepo extends JpaRepository<ReleaseInfoEntity, UUID> {
-    @Query(value = "select version from ReleaseInfoEntity where configId = :configId")
+    @Query(value = "select version from ReleaseInfoEntity where configId = :configId order by version")
     Collection<String> findReleases(@Param("configId") UUID configId);
 
     @Query(value = "select * from release_info where state = :state " +
-            "and EXTRACT(MINUTE FROM (now() - creation_date)) > :olderThan", nativeQuery = true)
+            "and EXTRACT(MINUTE FROM (now() - creation_date)) > :olderThan order by version", nativeQuery = true)
     Collection<ReleaseInfoEntity> findReleases(@Param("state") String state,
                                                @Param("olderThan") Integer olderThan);
 }
