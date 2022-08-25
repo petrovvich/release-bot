@@ -11,7 +11,7 @@ spring:
       connection-timeout: 15000
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
-    show-sql: true
+    show-sql: false
     hibernate:
       ddl-auto: validate
     properties:
