@@ -8,7 +8,7 @@
         <relativePath></relativePath>
         <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.example</groupId>
+    <groupId>it.petrovich</groupId>
     <artifactId>release-bot</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>release-bot</name>
@@ -25,14 +25,6 @@
         <postgresql.version>42.4.2</postgresql.version>
         <telegram.bots.version>6.1.0</telegram.bots.version>
     </properties>
-
-    <distributionManagement>
-        <repository>
-            <id>github</id>
-            <name>Release checker telegram bot</name>
-            <url>https://maven.pkg.github.com/petrovvich/release-bot</url>
-        </repository>
-    </distributionManagement>
 
     <dependencies>
         <dependency>
@@ -98,6 +90,7 @@
     </dependencies>
 
     <build>
+        <finalName>${project.name}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
