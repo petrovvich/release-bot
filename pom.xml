@@ -26,6 +26,14 @@
         <telegram.bots.version>6.1.0</telegram.bots.version>
     </properties>
 
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>Release checker telegram bot</name>
+            <url>https://maven.pkg.github.com/petrovvich/release-bot</url>
+        </repository>
+    </distributionManagement>
+
     <dependencies>
         <dependency>
             <groupId>ch.qos.logback</groupId>
