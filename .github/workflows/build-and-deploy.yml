@@ -27,6 +27,6 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           port: 22
-          source: "release-bot.jar"
+          source: "./target/release-bot.jar"
           target: "/opt/release-bot/source"
 
