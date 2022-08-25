@@ -42,10 +42,12 @@ public class ReleaseInfoEntity {
     private SourceType type;
     private String releaseUrl;
     private String version;
+    private OffsetDateTime publishDate;
     @Enumerated(EnumType.STRING)
     private NotificationState state;
 
-    public ReleaseInfoEntity(SourceType type, String releaseUrl, String version) {
+    public ReleaseInfoEntity(OffsetDateTime publishDate, SourceType type, String releaseUrl, String version) {
+        this.publishDate = publishDate;
         this.type = type;
         this.releaseUrl = releaseUrl;
         this.version = version;

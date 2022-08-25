@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      id: "1"
+      author: petrovich@softwarecats.dev
+      comment: Add column publish_date to release_info
+      changes:
+        - addColumn:
+            tableName: release_info
+            columns:
+              - column:
+                  name: publish_date
+                  type: timestamptz
