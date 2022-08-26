@@ -9,5 +9,5 @@ import java.util.UUID;
 
 public interface SourceConfigSpringJpaRepo extends JpaRepository<SourceConfigEntity, UUID> {
 
-    Collection<SourceConfigEntity> findAllByUpdateDateAfter(OffsetDateTime olderThan);
+    Collection<SourceConfigEntity> findAllByUpdateDateBefore(OffsetDateTime olderThan);
 }

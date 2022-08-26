@@ -23,7 +23,7 @@ public class ReleaseRepositoryImpl implements ReleaseRepository {
 
     @Override
     public Collection<SourceConfigEntity> getConfigs() {
-        return sourceConfigRepo.findAllByUpdateDateAfter(OffsetDateTime.now().minus(1, ChronoUnit.HOURS));
+        return sourceConfigRepo.findAllByUpdateDateBefore(OffsetDateTime.now().minus(1, ChronoUnit.HOURS));
     }
 
     @Override
