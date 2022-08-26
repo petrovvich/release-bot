@@ -11,7 +11,6 @@ import it.petrovich.bots.release.infrastructure.model.SourceType;
 import it.petrovich.bots.release.infrastructure.providers.Provider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -29,30 +28,27 @@ public class ReleaseScheduler {
     @Scheduled(cron = "${release.cron}")
     public void updateRelease() {
         log.debug("Begin update release info");
-        var configs = releaseRepository.getConfigs(PageRequest.of(0, 1));
+        var configs = releaseRepository.getConfigs();
 
-        while (configs.hasContent()) {
-            for (SourceConfigEntity config : configs) {
-                final var provider = providers.get(config.getType());
-                if (provider == null) {
-                    throw new ProviderNotFoundException(config.getType());
-                }
-                final var releases = releaseRepository.getReleases(config.getId());
-                final var releaseInfo = provider.retrieve(config.getUrl());
-                for (ReleaseInfoEntity newRelease : releaseInfo) {
-                    if (!releases.contains(newRelease.getVersion())) {
-                        newRelease.setConfigId(config.getId());
-                        newRelease.setState(NotificationState.NEW);
-                        releaseRepository.save(newRelease);
-                        log.debug("Saved new release: {} {} {}", newRelease.getType(), newRelease.getVersion(),
-                                newRelease.getReleaseUrl());
-                        notificationProvider.push(new ReleaseNotification(newRelease.getId(), config.getLibraryName(),
-                                newRelease.getType(), newRelease.getVersion(), newRelease.getReleaseUrl()));
-                    }
-                }
-                log.debug("Finish proceed config {} {}", config.getId(), config.getLibraryName());
+        for (SourceConfigEntity config : configs) {
+            final var provider = providers.get(config.getType());
+            if (provider == null) {
+                throw new ProviderNotFoundException(config.getType());
             }
-            configs = releaseRepository.getConfigs(configs.nextPageable());
+            final var releases = releaseRepository.getReleases(config.getId());
+            final var releaseInfo = provider.retrieve(config.getUrl());
+            for (ReleaseInfoEntity newRelease : releaseInfo) {
+                if (!releases.contains(newRelease.getVersion())) {
+                    newRelease.setConfigId(config.getId());
+                    newRelease.setState(NotificationState.NEW);
+                    releaseRepository.save(newRelease);
+                    log.debug("Saved new release: {} {} {}", newRelease.getType(), newRelease.getVersion(),
+                            newRelease.getReleaseUrl());
+                    notificationProvider.push(new ReleaseNotification(newRelease.getId(), config.getLibraryName(),
+                            newRelease.getType(), newRelease.getVersion(), newRelease.getReleaseUrl()));
+                }
+            }
+            log.debug("Finish proceed config {} {}", config.getId(), config.getLibraryName());
         }
 
         log.debug("End update release info");

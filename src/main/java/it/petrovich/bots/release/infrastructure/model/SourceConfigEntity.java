@@ -36,6 +36,7 @@ public class SourceConfigEntity {
     private UUID id;
     @CreationTimestamp
     private OffsetDateTime creationDate;
+    private OffsetDateTime updateDate;
     @Enumerated(EnumType.STRING)
     private SourceType type;
     private String url;

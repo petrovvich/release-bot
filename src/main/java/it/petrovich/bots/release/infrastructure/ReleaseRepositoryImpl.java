@@ -7,10 +7,10 @@ import it.petrovich.bots.release.infrastructure.repo.ReleaseInfoSpringJpaRepo;
 import it.petrovich.bots.release.infrastructure.repo.SourceConfigSpringJpaRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.OffsetDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Collection;
 import java.util.UUID;
 
@@ -22,8 +22,8 @@ public class ReleaseRepositoryImpl implements ReleaseRepository {
     private final SourceConfigSpringJpaRepo sourceConfigRepo;
 
     @Override
-    public Page<SourceConfigEntity> getConfigs(Pageable pageable) {
-        return sourceConfigRepo.findAll(pageable);
+    public Collection<SourceConfigEntity> getConfigs() {
+        return sourceConfigRepo.findAllByUpdateDateAfter(OffsetDateTime.now().minus(1, ChronoUnit.HOURS));
     }
 
     @Override
