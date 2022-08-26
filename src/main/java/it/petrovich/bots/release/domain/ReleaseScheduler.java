@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
+import java.util.Collection;
 import java.util.Map;
 
 @Slf4j
@@ -42,6 +43,12 @@ public class ReleaseScheduler {
             final var releases = releaseRepository.getReleases(config.getId());
             final var releaseInfo = provider.retrieve(config.getUrl());
             for (ReleaseInfoEntity newRelease : releaseInfo) {
+                if (isFirstLaunch(releases)) {
+                    newRelease.setConfigId(config.getId());
+                    newRelease.setState(NotificationState.SENT);
+                    releaseRepository.save(newRelease);
+                    continue;
+                }
                 if (!releases.contains(newRelease.getVersion())) {
                     newRelease.setConfigId(config.getId());
                     newRelease.setState(NotificationState.NEW);
@@ -52,12 +59,16 @@ public class ReleaseScheduler {
                             newRelease.getType(), newRelease.getVersion(), newRelease.getReleaseUrl()));
                 }
             }
-            log.debug("Finish proceed config {} {}", config.getId(), config.getLibraryName());
             config.setUpdateDate(OffsetDateTime.now());
             releaseRepository.update(config);
+            log.debug("Finish proceed config {} {}", config.getId(), config.getLibraryName());
         }
 
         log.debug("End update release info");
+    }
+
+    private static boolean isFirstLaunch(Collection<String> releases) {
+        return releases.isEmpty();
     }
 
     @Scheduled(cron = "${release.cron}")
