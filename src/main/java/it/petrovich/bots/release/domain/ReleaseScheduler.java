@@ -13,7 +13,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.OffsetDateTime;
 import java.util.Map;
 
 @Slf4j
@@ -26,6 +29,7 @@ public class ReleaseScheduler {
 
 
     @Scheduled(cron = "${release.cron}")
+    @Transactional(rollbackFor = Throwable.class, propagation = Propagation.REQUIRES_NEW)
     public void updateRelease() {
         log.debug("Begin update release info");
         var configs = releaseRepository.getConfigs();
@@ -49,12 +53,15 @@ public class ReleaseScheduler {
                 }
             }
             log.debug("Finish proceed config {} {}", config.getId(), config.getLibraryName());
+            config.setUpdateDate(OffsetDateTime.now());
+            releaseRepository.update(config);
         }
 
         log.debug("End update release info");
     }
 
     @Scheduled(cron = "${release.cron}")
+    @Transactional(rollbackFor = Throwable.class, propagation = Propagation.REQUIRES_NEW)
     public void rescheduleNotification() {
         log.debug("Begin reschedule notifications");
         releaseRepository.getReleases(NotificationState.PREPARED)

@@ -19,4 +19,6 @@ public interface ReleaseRepository {
     void save(ReleaseInfoEntity newRelease);
 
     void update(UUID releaseId, NotificationState prepared);
+
+    void update(SourceConfigEntity source);
 }

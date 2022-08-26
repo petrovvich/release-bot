@@ -54,4 +54,9 @@ public class ReleaseRepositoryImpl implements ReleaseRepository {
             releaseInfoRepo.saveAndFlush(found.get());
         }
     }
+
+    @Override
+    public void update(SourceConfigEntity source) {
+        sourceConfigRepo.save(source);
+    }
 }
