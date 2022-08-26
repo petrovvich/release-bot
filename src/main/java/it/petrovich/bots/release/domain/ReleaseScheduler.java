@@ -11,6 +11,7 @@ import it.petrovich.bots.release.infrastructure.model.SourceType;
 import it.petrovich.bots.release.infrastructure.providers.Provider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -28,27 +29,31 @@ public class ReleaseScheduler {
     @Scheduled(cron = "${release.cron}")
     public void updateRelease() {
         log.debug("Begin update release info");
-        final var configs = releaseRepository.getConfigs();
+        var configs = releaseRepository.getConfigs(PageRequest.of(0, 1));
 
-        for (SourceConfigEntity config : configs) {
-            final var provider = providers.get(config.getType());
-            if (provider == null) {
-                throw new ProviderNotFoundException(config.getType());
-            }
-            final var releases = releaseRepository.getReleases(config.getId());
-            final var releaseInfo = provider.retrieve(config.getUrl());
-            for (ReleaseInfoEntity newRelease : releaseInfo) {
-                if (!releases.contains(newRelease.getVersion())) {
-                    newRelease.setConfigId(config.getId());
-                    newRelease.setState(NotificationState.NEW);
-                    releaseRepository.save(newRelease);
-                    log.debug("Saved new release: {} {} {}", newRelease.getType(), newRelease.getVersion(),
-                            newRelease.getReleaseUrl());
-                    notificationProvider.push(new ReleaseNotification(newRelease.getId(), config.getLibraryName(),
-                            newRelease.getType(), newRelease.getVersion(), newRelease.getReleaseUrl()));
+        while (configs.hasNext()) {
+            for (SourceConfigEntity config : configs) {
+                final var provider = providers.get(config.getType());
+                if (provider == null) {
+                    throw new ProviderNotFoundException(config.getType());
+                }
+                final var releases = releaseRepository.getReleases(config.getId());
+                final var releaseInfo = provider.retrieve(config.getUrl());
+                for (ReleaseInfoEntity newRelease : releaseInfo) {
+                    if (!releases.contains(newRelease.getVersion())) {
+                        newRelease.setConfigId(config.getId());
+                        newRelease.setState(NotificationState.NEW);
+                        releaseRepository.save(newRelease);
+                        log.debug("Saved new release: {} {} {}", newRelease.getType(), newRelease.getVersion(),
+                                newRelease.getReleaseUrl());
+                        notificationProvider.push(new ReleaseNotification(newRelease.getId(), config.getLibraryName(),
+                                newRelease.getType(), newRelease.getVersion(), newRelease.getReleaseUrl()));
+                    }
                 }
             }
+            configs = releaseRepository.getConfigs(configs.nextPageable());
         }
+
         log.debug("End update release info");
     }
 

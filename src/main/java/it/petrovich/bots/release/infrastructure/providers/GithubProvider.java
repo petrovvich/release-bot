@@ -11,6 +11,7 @@ import org.jsoup.nodes.Element;
 import java.net.URL;
 import java.time.OffsetDateTime;
 import java.util.Collection;
+import java.util.Comparator;
 
 import static java.util.Optional.ofNullable;
 
@@ -37,6 +38,7 @@ public class GithubProvider implements Provider {
                 .filter(element -> !"Downloads".contains(element.text()))
                 .map(element -> new ReleaseInfoEntity(getPublishDate(element), sourceType,
                         buildUrl(requestUrl, element), element.text()))
+                .sorted(Comparator.comparing(ReleaseInfoEntity::getVersion, String::compareTo))
                 .toList();
     }
 

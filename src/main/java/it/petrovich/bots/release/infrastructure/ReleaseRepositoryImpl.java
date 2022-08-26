@@ -7,6 +7,8 @@ import it.petrovich.bots.release.infrastructure.repo.ReleaseInfoSpringJpaRepo;
 import it.petrovich.bots.release.infrastructure.repo.SourceConfigSpringJpaRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -20,8 +22,8 @@ public class ReleaseRepositoryImpl implements ReleaseRepository {
     private final SourceConfigSpringJpaRepo sourceConfigRepo;
 
     @Override
-    public Collection<SourceConfigEntity> getConfigs() {
-        return sourceConfigRepo.findAll();
+    public Page<SourceConfigEntity> getConfigs(Pageable pageable) {
+        return sourceConfigRepo.findAll(pageable);
     }
 
     @Override
