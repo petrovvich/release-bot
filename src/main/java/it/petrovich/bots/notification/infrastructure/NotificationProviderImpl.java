@@ -15,7 +15,7 @@ import java.util.concurrent.ArrayBlockingQueue;
 @RequiredArgsConstructor
 public class NotificationProviderImpl implements NotificationProvider {
     private final ReleaseRepository releaseRepository;
-    private static final Queue<ReleaseNotification> QUEUE = new ArrayBlockingQueue<>(100);
+    private static final Queue<ReleaseNotification> QUEUE = new ArrayBlockingQueue<>(200);
 
     @Override
     public void push(ReleaseNotification newRelease) {

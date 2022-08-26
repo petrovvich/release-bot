@@ -31,7 +31,7 @@ public class ReleaseScheduler {
         log.debug("Begin update release info");
         var configs = releaseRepository.getConfigs(PageRequest.of(0, 1));
 
-        while (configs.hasNext()) {
+        while (configs.hasContent()) {
             for (SourceConfigEntity config : configs) {
                 final var provider = providers.get(config.getType());
                 if (provider == null) {
@@ -50,6 +50,7 @@ public class ReleaseScheduler {
                                 newRelease.getType(), newRelease.getVersion(), newRelease.getReleaseUrl()));
                     }
                 }
+                log.debug("Finish proceed config {} {}", config.getId(), config.getLibraryName());
             }
             configs = releaseRepository.getConfigs(configs.nextPageable());
         }
