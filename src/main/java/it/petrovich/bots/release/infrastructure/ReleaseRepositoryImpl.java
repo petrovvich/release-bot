@@ -9,8 +9,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.time.OffsetDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.Collection;
 import java.util.UUID;
 
@@ -23,7 +21,7 @@ public class ReleaseRepositoryImpl implements ReleaseRepository {
 
     @Override
     public Collection<SourceConfigEntity> getConfigs() {
-        return sourceConfigRepo.findAllByUpdateDateBefore(OffsetDateTime.now().minus(1, ChronoUnit.HOURS));
+        return sourceConfigRepo.findAllWithLimit(5);
     }
 
     @Override
