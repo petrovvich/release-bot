@@ -19,7 +19,7 @@ jobs:
 
       - name: Build jar
         run: |
-          mvn clean package && cp target/release-bot.jar release-bot.jar
+          ./gradlew build && cp build/libs/release-bot.jar release-bot.jar
 
       - name: Upload application
         uses: appleboy/scp-action@master
