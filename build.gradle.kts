@@ -1,6 +1,8 @@
 plugins {
     java
+    application
     `maven-publish`
+    id("org.springframework.boot") version "2.7.3"
 }
 
 repositories {
@@ -41,7 +43,7 @@ publishing {
     }
 }
 
-tasks.jar {
+tasks.bootJar {
     archiveFileName.set("release-bot.jar")
 }
 
