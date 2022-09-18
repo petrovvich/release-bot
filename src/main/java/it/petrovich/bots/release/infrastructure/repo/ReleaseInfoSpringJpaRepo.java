@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public interface ReleaseInfoSpringJpaRepo extends JpaRepository<ReleaseInfoEntity, UUID> {
     @Query(value = "select sub.* from ( " +
-            "select version from release_info where config_id = :configId order by version desc limit 20) as sub " +
+            "select version from release_info where config_id = :configId order by version desc limit 100) as sub " +
             "order by sub.version",
             nativeQuery = true)
     Collection<String> findReleases(@Param("configId") UUID configId);
