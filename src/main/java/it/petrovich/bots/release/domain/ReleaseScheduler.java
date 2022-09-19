@@ -27,7 +27,7 @@ public class ReleaseScheduler {
     private final ReleaseRepository releaseRepository;
 
 
-    @Scheduled(cron = "${release.cron}")
+    @Scheduled(fixedRate = "${release.cron}")
     @Transactional(rollbackOn = Throwable.class, value = Transactional.TxType.REQUIRES_NEW)
     public void updateRelease() {
         log.debug("Begin update release info");
@@ -68,7 +68,7 @@ public class ReleaseScheduler {
         return releases.isEmpty();
     }
 
-    @Scheduled(cron = "${release.cron}")
+    @Scheduled(cron = "0 */1 * * * *")
     @Transactional(rollbackOn = Throwable.class, value = Transactional.TxType.REQUIRES_NEW)
     public void rescheduleNotification() {
         log.debug("Begin reschedule notifications");

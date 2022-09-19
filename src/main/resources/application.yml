@@ -31,13 +31,13 @@ datasources:
     maximum-pool-size: 10
     connection-timeout: 15000
 
-#jpa:
-#  default:
-#    entity-scan:
-#      packages: it.petrovich.bots.release.infrastructure.model
+jpa:
+  default:
+    entity-scan:
+      packages: it.petrovich.bots.release.infrastructure.model
 
 release:
-  cron: 0 */1 * * * * # each minute
+  cron: "60s" # each minute
 
 notification:
   cron: "*/30 * * * * *" # each 30 seconds

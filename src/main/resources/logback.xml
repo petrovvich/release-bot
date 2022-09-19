@@ -32,6 +32,9 @@
     <logger name="ch.qos" level="off" additivity="false">
         <appender-ref ref="stdout"/>
     </logger>
+    <logger name="io.micronaut.runtime" level="info" additivity="false">
+        <appender-ref ref="stdout"/>
+    </logger>
     <root level="error">
         <appender-ref ref="stdout"/>
     </root>

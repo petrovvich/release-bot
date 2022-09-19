@@ -35,9 +35,10 @@ dependencies {
     implementation("io.micronaut.sql", "micronaut-hibernate-jpa")
     implementation("io.micronaut.sql", "micronaut-jdbc-hikari")
 
+    annotationProcessor("org.projectlombok", "lombok", lombokVersion)
+    annotationProcessor("io.micronaut", "micronaut-inject-java")
     annotationProcessor("io.micronaut.data", "micronaut-data-processor")
     annotationProcessor("io.micronaut", "micronaut-http-validation")
-    annotationProcessor("org.projectlombok", "lombok", lombokVersion)
 
     testCompileOnly("org.projectlombok", "lombok", lombokVersion)
     testAnnotationProcessor("org.projectlombok", "lombok", lombokVersion)
