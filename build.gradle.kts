@@ -45,8 +45,8 @@ dependencies {
 }
 
 java {
-    sourceCompatibility = JavaVersion.toVersion("17")
-    targetCompatibility = JavaVersion.toVersion("17")
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 application {
@@ -64,7 +64,10 @@ micronaut {
     }
 }
 
+tasks.shadowJar {
+    archiveFileName.set("release-bot.jar")
+}
 
-tasks.withType<JavaCompile>() {
+tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
 }
