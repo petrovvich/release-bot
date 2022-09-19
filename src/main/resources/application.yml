@@ -37,7 +37,7 @@ jpa:
       packages: it.petrovich.bots.release.infrastructure.model
 
 release:
-  cron: "60s" # each minute
+  cron: "0 */1 * * * *" # each minute
 
 notification:
   cron: "*/30 * * * * *" # each 30 seconds
