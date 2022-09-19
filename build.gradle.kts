@@ -22,18 +22,17 @@ dependencies {
 
     implementation("ch.qos.logback", "logback-classic")
     implementation("com.vladmihalcea", "hibernate-types-52", "2.19.1")
-    implementation("net.logstash.logback:logstash-logback-encoder:7.2")
-    implementation("org.hibernate.validator", "hibernate-validator", "6.2.4.Final")
+    implementation("net.logstash.logback", "logstash-logback-encoder", "7.2")
     implementation("org.jsoup", "jsoup", "1.15.3")
     implementation("org.postgresql", "postgresql")
     implementation("org.telegram", "telegrambots", "6.1.0")
-    implementation("jakarta.persistence", "jakarta.persistence-api", "3.1.0")
+
     implementation("jakarta.annotation", "jakarta.annotation-api")
 
     implementation("io.micronaut", "micronaut-validation")
-    implementation("io.micronaut.sql", "micronaut-hibernate-jpa")
     implementation("io.micronaut.data", "micronaut-data-hibernate-jpa")
     implementation("io.micronaut.liquibase", "micronaut-liquibase")
+    implementation("io.micronaut.sql", "micronaut-hibernate-jpa")
     implementation("io.micronaut.sql", "micronaut-jdbc-hikari")
 
     annotationProcessor("io.micronaut.data", "micronaut-data-processor")

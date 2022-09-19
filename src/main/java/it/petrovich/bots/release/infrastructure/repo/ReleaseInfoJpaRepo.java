@@ -1,12 +1,14 @@
 package it.petrovich.bots.release.infrastructure.repo;
 
 import io.micronaut.data.annotation.Query;
+import io.micronaut.data.annotation.Repository;
 import io.micronaut.data.jpa.repository.JpaRepository;
 import it.petrovich.bots.release.infrastructure.model.ReleaseInfoEntity;
 
 import java.util.Collection;
 import java.util.UUID;
 
+@Repository
 public interface ReleaseInfoJpaRepo extends JpaRepository<ReleaseInfoEntity, UUID> {
     @Query(value = "select sub.* from ( " +
             "select version from release_info where config_id = :configId order by version desc limit 100) as sub " +

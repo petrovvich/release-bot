@@ -32,7 +32,7 @@
     <logger name="ch.qos" level="off" additivity="false">
         <appender-ref ref="stdout"/>
     </logger>
-    <root level="debug">
+    <root level="error">
         <appender-ref ref="stdout"/>
     </root>
 </configuration>
