@@ -2,16 +2,16 @@ package it.petrovich.bots.notification.infrastructure;
 
 import it.petrovich.bots.release.infrastructure.ReleaseRepository;
 import it.petrovich.bots.release.infrastructure.model.NotificationState;
+import jakarta.inject.Singleton;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
 
 @Slf4j
-@Service
+@Singleton
 @RequiredArgsConstructor
 public class NotificationProviderImpl implements NotificationProvider {
     private final ReleaseRepository releaseRepository;

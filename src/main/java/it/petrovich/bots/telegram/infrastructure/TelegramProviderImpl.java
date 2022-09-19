@@ -1,14 +1,13 @@
 package it.petrovich.bots.telegram.infrastructure;
 
-
+import jakarta.inject.Singleton;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 
 @Slf4j
-@Service
+@Singleton
 @RequiredArgsConstructor
 public class TelegramProviderImpl implements TelegramProvider {
     private final Collection<NotificationBot> bots;

@@ -1,20 +1,20 @@
 package it.petrovich.bots.notification.domain;
 
+import io.micronaut.scheduling.annotation.Scheduled;
 import it.petrovich.bots.notification.infrastructure.NotificationProvider;
 import it.petrovich.bots.notification.infrastructure.ReleaseNotification;
 import it.petrovich.bots.release.infrastructure.ReleaseRepository;
 import it.petrovich.bots.release.infrastructure.model.NotificationState;
 import it.petrovich.bots.telegram.infrastructure.NotificationEvent;
 import it.petrovich.bots.telegram.infrastructure.TelegramProvider;
+import jakarta.inject.Singleton;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
 
 @Slf4j
-@Service
+@Singleton
 @RequiredArgsConstructor
 public class NotificationService {
     private static final String MSG_TEMPLATE = """
