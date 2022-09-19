@@ -1,35 +1,38 @@
-spring:
-  jmx:
-    enabled: false
-  datasource:
+micronaut:
+  application:
+    name: release-bot
+  server:
+    port: 8965
+
+datasources:
+  default:
     url: jdbc:postgresql://${DB_HOST:0.0.0.0}/release
-    driver-class-name: org.postgresql.Driver
+    driverClassName: org.postgresql.Driver
     username: ${DB_USER}
     password: ${DB_PASSWORD}
-    hikari:
-      maximum-pool-size: 10
-      connection-timeout: 15000
-  jpa:
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-    show-sql: false
-    hibernate:
-      ddl-auto: validate
+    db-type: postgresql
+    dialect: POSTGRES
+    maximum-pool-size: 10
+    connection-timeout: 15000
+
+liquibase:
+  datasources:
+    default:
+      change-log: 'classpath:db/changelog/db.changelog-master.yaml'
+
+jpa:
+  default:
+    entity-scan:
+      packages: it.petrovich.bots.release.infrastructure.model
     properties:
+      physical_naming_strategy: com.vladmihalcea.hibernate.type.util.CamelCaseToSnakeCaseNamingStrategy
+      implicit_naming_strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
       hibernate:
         format-sql: true
         default_schema: public
-        physical_naming_strategy: com.vladmihalcea.hibernate.type.util.CamelCaseToSnakeCaseNamingStrategy
-        implicit_naming_strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
-  liquibase:
-    enabled: true
-    change-log: db/changelog/db.changelog-master.yaml
-
-log:
-  service:
-    name: release-bot
 
 release:
-  cron: 0 */1 * * * * # each minute
+  cron: "0 */1 * * * *" # each minute
 
 notification:
   cron: "*/30 * * * * *" # each 30 seconds

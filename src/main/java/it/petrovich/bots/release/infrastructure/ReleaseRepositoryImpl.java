@@ -3,21 +3,21 @@ package it.petrovich.bots.release.infrastructure;
 import it.petrovich.bots.release.infrastructure.model.NotificationState;
 import it.petrovich.bots.release.infrastructure.model.ReleaseInfoEntity;
 import it.petrovich.bots.release.infrastructure.model.SourceConfigEntity;
-import it.petrovich.bots.release.infrastructure.repo.ReleaseInfoSpringJpaRepo;
-import it.petrovich.bots.release.infrastructure.repo.SourceConfigSpringJpaRepo;
+import it.petrovich.bots.release.infrastructure.repo.ReleaseInfoJpaRepo;
+import it.petrovich.bots.release.infrastructure.repo.SourceConfigJpaRepo;
+import jakarta.inject.Singleton;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.UUID;
 
 @Slf4j
-@Service
+@Singleton
 @RequiredArgsConstructor
 public class ReleaseRepositoryImpl implements ReleaseRepository {
-    private final ReleaseInfoSpringJpaRepo releaseInfoRepo;
-    private final SourceConfigSpringJpaRepo sourceConfigRepo;
+    private final ReleaseInfoJpaRepo releaseInfoRepo;
+    private final SourceConfigJpaRepo sourceConfigRepo;
 
     @Override
     public Collection<SourceConfigEntity> getConfigs() {

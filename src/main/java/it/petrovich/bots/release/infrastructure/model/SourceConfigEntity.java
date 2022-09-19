@@ -1,5 +1,6 @@
 package it.petrovich.bots.release.infrastructure.model;
 
+import io.micronaut.data.annotation.GeneratedValue;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -7,14 +8,13 @@ import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.type.PostgresUUIDType;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.time.OffsetDateTime;
@@ -32,10 +32,11 @@ import java.util.UUID;
 public class SourceConfigEntity {
     @Id
     @Column(columnDefinition = "pg-uuid")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(GeneratedValue.Type.AUTO)
     private UUID id;
     @CreationTimestamp
     private OffsetDateTime creationDate;
+    @UpdateTimestamp
     private OffsetDateTime updateDate;
     @Enumerated(EnumType.STRING)
     private SourceType type;

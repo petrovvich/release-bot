@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration scan="true" scanPeriod="30 minutes">
-    <springProperty name="SERVICE_NAME" source="log.service.name"/>
+<configuration>
     <property name="HOSTNAME" value="${HOSTNAME}"/>
 
     <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
@@ -15,7 +14,6 @@
                 <pattern>
                     <pattern>
                         {
-                        "app": "${SERVICE_NAME}",
                         "host": "${HOSTNAME}",
                         "level": "%level",
                         "class": "%class{0}.%M:%L",
@@ -28,21 +26,16 @@
         </encoder>
     </appender>
 
-    <springProfile name="!prod">
-        <logger name="it.petrovich" level="debug" additivity="false">
-            <appender-ref ref="stdout"/>
-        </logger>
-        <logger name="org.springframework" level="error" additivity="false">
-            <appender-ref ref="stdout"/>
-        </logger>
-        <root level="off">
-            <appender-ref ref="stdout"/>
-        </root>
-    </springProfile>
-
-    <springProfile name="prod">
-        <logger name="it.petrovich" level="info" additivity="false">
-            <appender-ref ref="stdout"/>
-        </logger>
-    </springProfile>
+    <logger name="it.petrovich" level="debug" additivity="false">
+        <appender-ref ref="stdout"/>
+    </logger>
+    <logger name="ch.qos" level="off" additivity="false">
+        <appender-ref ref="stdout"/>
+    </logger>
+    <logger name="io.micronaut.runtime" level="info" additivity="false">
+        <appender-ref ref="stdout"/>
+    </logger>
+    <root level="error">
+        <appender-ref ref="stdout"/>
+    </root>
 </configuration>

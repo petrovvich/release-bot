@@ -1,5 +1,6 @@
 package it.petrovich.bots.release.domain;
 
+import io.micronaut.scheduling.annotation.Scheduled;
 import it.petrovich.bots.notification.infrastructure.NotificationProvider;
 import it.petrovich.bots.notification.infrastructure.ReleaseNotification;
 import it.petrovich.bots.release.infrastructure.ProviderNotFoundException;
@@ -9,19 +10,16 @@ import it.petrovich.bots.release.infrastructure.model.ReleaseInfoEntity;
 import it.petrovich.bots.release.infrastructure.model.SourceConfigEntity;
 import it.petrovich.bots.release.infrastructure.model.SourceType;
 import it.petrovich.bots.release.infrastructure.providers.Provider;
+import jakarta.inject.Singleton;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.time.OffsetDateTime;
+import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.Map;
 
 @Slf4j
-@Service
+@Singleton
 @RequiredArgsConstructor
 public class ReleaseScheduler {
     private final NotificationProvider notificationProvider;
@@ -30,7 +28,7 @@ public class ReleaseScheduler {
 
 
     @Scheduled(cron = "${release.cron}")
-    @Transactional(rollbackFor = Throwable.class, propagation = Propagation.REQUIRES_NEW)
+    @Transactional(rollbackOn = Throwable.class, value = Transactional.TxType.REQUIRES_NEW)
     public void updateRelease() {
         log.debug("Begin update release info");
         var configs = releaseRepository.getConfigs();
@@ -59,7 +57,6 @@ public class ReleaseScheduler {
                             newRelease.getType(), newRelease.getVersion(), newRelease.getReleaseUrl()));
                 }
             }
-            config.setUpdateDate(OffsetDateTime.now());
             releaseRepository.update(config);
             log.debug("Finish proceed config {} {}", config.getId(), config.getLibraryName());
         }
@@ -72,7 +69,7 @@ public class ReleaseScheduler {
     }
 
     @Scheduled(cron = "${release.cron}")
-    @Transactional(rollbackFor = Throwable.class, propagation = Propagation.REQUIRES_NEW)
+    @Transactional(rollbackOn = Throwable.class, value = Transactional.TxType.REQUIRES_NEW)
     public void rescheduleNotification() {
         log.debug("Begin reschedule notifications");
         releaseRepository.getReleases(NotificationState.PREPARED)
