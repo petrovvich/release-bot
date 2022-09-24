@@ -11,6 +11,7 @@ import jakarta.inject.Singleton;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import javax.transaction.Transactional;
 import java.text.MessageFormat;
 
 @Slf4j
@@ -29,6 +30,7 @@ public class NotificationService {
     private final ReleaseRepository releaseRepository;
 
     @Scheduled(cron = "${notification.cron}")
+    @Transactional(rollbackOn = Throwable.class, value = Transactional.TxType.REQUIRES_NEW)
     public void sendNotification() {
         notificationProvider.pull()
                 .ifPresent(releaseNotification -> {
