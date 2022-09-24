@@ -4,8 +4,8 @@ description = "release-bot"
 
 plugins {
     id("com.github.johnrengelman.shadow") version "7.1.2"
-    id("io.micronaut.application") version "3.5.3"
-    id("io.micronaut.test-resources") version "3.5.3"
+    id("io.micronaut.application") version "3.6.0"
+    id("io.micronaut.test-resources") version "3.6.0"
 }
 
 repositories {
@@ -14,8 +14,6 @@ repositories {
 }
 
 val lombokVersion = "1.18.24"
-val micronautCoreVersion = "3.6.3"
-val micronautDataVersion = "3.7.3"
 
 dependencies {
     compileOnly("org.projectlombok", "lombok", lombokVersion)
@@ -55,7 +53,7 @@ application {
 
 graalvmNative.toolchainDetection.set(false)
 micronaut {
-    version("3.5.3")
+    version("3.7.0")
     runtime("netty")
     testRuntime("junit5")
     processing {
