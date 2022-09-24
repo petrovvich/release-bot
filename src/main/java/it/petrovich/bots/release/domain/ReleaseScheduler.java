@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.transaction.Transactional;
+import java.time.OffsetDateTime;
 import java.util.Collection;
 import java.util.Map;
 
@@ -57,6 +58,7 @@ public class ReleaseScheduler {
                             newRelease.getType(), newRelease.getVersion(), newRelease.getReleaseUrl()));
                 }
             }
+            config.setUpdateDate(OffsetDateTime.now());
             releaseRepository.update(config);
             log.debug("Finish proceed config {} {}", config.getId(), config.getLibraryName());
         }
