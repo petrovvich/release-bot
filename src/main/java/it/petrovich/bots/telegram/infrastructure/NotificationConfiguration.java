@@ -1,8 +1,8 @@
 package it.petrovich.bots.telegram.infrastructure;
 
 import io.micronaut.context.annotation.Bean;
-import io.micronaut.context.annotation.ConfigurationProperties;
-import jakarta.inject.Singleton;
+import io.micronaut.context.annotation.Factory;
+import io.micronaut.context.annotation.Property;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,10 +11,10 @@ import java.util.Map;
 
 @Getter
 @Setter
-@Singleton
-@ConfigurationProperties("notification")
+@Factory
 public class NotificationConfiguration {
 
+    @Property(name = "notification.telegram")
     private Map<String, BotProperties> telegram;
 
     @Bean
