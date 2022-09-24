@@ -48,6 +48,7 @@ public class ReleaseRepositoryImpl implements ReleaseRepository {
     public void update(UUID releaseId, NotificationState state) {
         final var found = releaseInfoRepo.findById(releaseId);
         if (found.isPresent()) {
+            log.debug("Try to update entity {}", found);
             found.get().setState(state);
             releaseInfoRepo.saveAndFlush(found.get());
         }
