@@ -14,6 +14,7 @@ public class TelegramProviderImpl implements TelegramProvider {
 
     @Override
     public void send(NotificationEvent event) {
+        log.debug("Try to send notification {}", event);
         bots.stream()
                 .filter(bot -> bot.getChannel().equalsIgnoreCase(event.channel()))
                 .peek(bot -> bot.sendMessage(event.message()))

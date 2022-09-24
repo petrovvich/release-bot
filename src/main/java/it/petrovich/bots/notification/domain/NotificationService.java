@@ -40,6 +40,7 @@ public class NotificationService {
     }
 
     private void sendToBot(ReleaseNotification releaseNotification) {
+        log.debug("Try to send notification {}", releaseNotification);
         telegramProvider.send(new NotificationEvent("releases",
                 MessageFormat.format(MSG_TEMPLATE, releaseNotification.libraryName(),
                         releaseNotification.sourceType().name().toLowerCase(),
