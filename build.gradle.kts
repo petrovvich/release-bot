@@ -18,28 +18,28 @@ val lombokVersion = "1.18.24"
 dependencies {
     compileOnly("org.projectlombok", "lombok", lombokVersion)
 
-    implementation("ch.qos.logback", "logback-classic")
-    implementation("com.vladmihalcea", "hibernate-types-52", "2.19.1")
     implementation("net.logstash.logback", "logstash-logback-encoder", "7.2")
-    implementation("org.jsoup", "jsoup", "1.15.3")
-    implementation("org.postgresql", "postgresql")
+    implementation("com.vladmihalcea", "hibernate-types-52", "2.19.2")
     implementation("org.telegram", "telegrambots", "6.1.0")
+    implementation("org.jsoup", "jsoup", "1.15.3")
 
     implementation("jakarta.annotation", "jakarta.annotation-api")
+    implementation("ch.qos.logback", "logback-classic")
+    implementation("org.postgresql", "postgresql")
 
-    implementation("io.micronaut", "micronaut-validation")
     implementation("io.micronaut.data", "micronaut-data-hibernate-jpa")
     implementation("io.micronaut.liquibase", "micronaut-liquibase")
     implementation("io.micronaut.sql", "micronaut-hibernate-jpa")
     implementation("io.micronaut.sql", "micronaut-jdbc-hikari")
+    implementation("io.micronaut", "micronaut-validation")
 
-    annotationProcessor("org.projectlombok", "lombok", lombokVersion)
-    annotationProcessor("io.micronaut", "micronaut-inject-java")
     annotationProcessor("io.micronaut.data", "micronaut-data-processor")
     annotationProcessor("io.micronaut", "micronaut-http-validation")
+    annotationProcessor("io.micronaut", "micronaut-inject-java")
+    annotationProcessor("org.projectlombok", "lombok", lombokVersion)
 
-    testCompileOnly("org.projectlombok", "lombok", lombokVersion)
     testAnnotationProcessor("org.projectlombok", "lombok", lombokVersion)
+    testCompileOnly("org.projectlombok", "lombok", lombokVersion)
 }
 
 java {
