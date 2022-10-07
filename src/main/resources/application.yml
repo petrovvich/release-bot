@@ -32,7 +32,7 @@ jpa:
         default_schema: public
 
 release:
-  cron: "0 */1 * * * *" # each minute
+  cron: "0 */5 * * * *" # each 5 minutes
 
 notification:
   cron: "*/30 * * * * *" # each 30 seconds
