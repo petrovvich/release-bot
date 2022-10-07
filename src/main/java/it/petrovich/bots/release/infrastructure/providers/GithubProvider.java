@@ -50,7 +50,13 @@ public class GithubProvider implements Provider {
         final var parent = ofNullable(element.parent())
                 .map(Element::parent).map(Element::parent)
                 .map(parentElem -> parentElem.getElementsByTag("relative-time"))
-                .map(parentElem -> parentElem.get(0));
+                .map(parentElem -> {
+                    if (parentElem.size() > 0) {
+                        return parentElem.get(0);
+                    } else {
+                        return null;
+                    }
+                });
         if (parent.isPresent()) {
             return OffsetDateTime.parse(parent.get().attributes().get("datetime"));
         }
