@@ -4,8 +4,8 @@ description = "release-bot"
 
 plugins {
     id("com.github.johnrengelman.shadow") version "7.1.2"
-    id("io.micronaut.application") version "3.6.0"
-    id("io.micronaut.test-resources") version "3.6.0"
+    id("io.micronaut.application") version "3.6.2"
+    id("io.micronaut.test-resources") version "3.6.2"
 }
 
 repositories {
@@ -19,7 +19,7 @@ dependencies {
     compileOnly("org.projectlombok", "lombok", lombokVersion)
 
     implementation("net.logstash.logback", "logstash-logback-encoder", "7.2")
-    implementation("com.vladmihalcea", "hibernate-types-52", "2.19.2")
+    implementation("com.vladmihalcea", "hibernate-types-52", "2.20.0")
     implementation("org.telegram", "telegrambots", "6.1.0")
     implementation("org.jsoup", "jsoup", "1.15.3")
 
@@ -53,7 +53,7 @@ application {
 
 graalvmNative.toolchainDetection.set(false)
 micronaut {
-    version("3.7.0")
+    version("3.7.2")
     runtime("netty")
     testRuntime("junit5")
     processing {
