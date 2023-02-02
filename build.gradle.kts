@@ -4,8 +4,8 @@ description = "release-bot"
 
 plugins {
     id("com.github.johnrengelman.shadow") version "7.1.2"
-    id("io.micronaut.application") version "3.6.7"
-    id("io.micronaut.test-resources") version "3.6.7"
+    id("io.micronaut.application") version "3.7.0"
+    id("io.micronaut.test-resources") version "3.7.0"
 }
 
 repositories {
@@ -18,6 +18,7 @@ val logstashVersion = "7.2"
 val hibernateTypesVersion = "2.21.1"
 val telegrambotsVersion = "6.4.0"
 val jsoupVersion = "1.15.3"
+val logbackVersion = "1.4.5"
 
 dependencies {
     compileOnly("org.projectlombok", "lombok", lombokVersion)
@@ -27,8 +28,8 @@ dependencies {
     implementation("org.telegram", "telegrambots", telegrambotsVersion)
     implementation("org.jsoup", "jsoup", jsoupVersion)
 
+    implementation("ch.qos.logback", "logback-classic", logbackVersion)
     implementation("jakarta.annotation", "jakarta.annotation-api")
-    implementation("ch.qos.logback", "logback-classic")
     implementation("org.postgresql", "postgresql")
 
     implementation("io.micronaut.data", "micronaut-data-hibernate-jpa")
