@@ -13,12 +13,12 @@ repositories {
     mavenCentral()
 }
 
-val lombokVersion = "1.18.24"
-val logstashVersion = "7.2"
+val lombokVersion = "1.18.30"
+val logstashVersion = "7.4"
 val hibernateTypesVersion = "2.21.1"
-val telegrambotsVersion = "6.4.0"
-val jsoupVersion = "1.15.3"
-val logbackVersion = "1.4.5"
+val telegrambotsVersion = "6.9.7.0"
+val jsoupVersion = "1.17.2"
+val logbackVersion = "1.4.14"
 
 dependencies {
     compileOnly("org.projectlombok", "lombok", lombokVersion)
@@ -57,6 +57,7 @@ application {
 }
 
 graalvmNative.toolchainDetection.set(false)
+
 micronaut {
     version("3.7.2")
     runtime("netty")
