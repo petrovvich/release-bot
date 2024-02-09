@@ -3,7 +3,7 @@ version = "0.0.1-SNAPSHOT"
 description = "release-bot"
 
 plugins {
-    id("com.github.johnrengelman.shadow") version "7.1.2"
+    id("com.github.johnrengelman.shadow") version "8.1.1"
     id("io.micronaut.application") version "3.7.0"
     id("io.micronaut.test-resources") version "3.7.0"
 }
