@@ -4,12 +4,11 @@ description = "release-bot"
 
 plugins {
     id("com.github.johnrengelman.shadow") version "8.1.1"
-    id("io.micronaut.application") version "3.7.0"
-    id("io.micronaut.test-resources") version "3.7.0"
+    id("io.micronaut.application") version "4.3.1"
+    id("io.micronaut.test-resources") version "4.3.1"
 }
 
 repositories {
-    mavenLocal()
     mavenCentral()
 }
 
@@ -21,12 +20,14 @@ val jsoupVersion = "1.17.2"
 val logbackVersion = "1.4.14"
 
 dependencies {
+
     compileOnly("org.projectlombok", "lombok", lombokVersion)
+    compileOnly("io.micronaut", "micronaut-http-client")
 
     implementation("net.logstash.logback", "logstash-logback-encoder", logstashVersion)
-    implementation("com.vladmihalcea", "hibernate-types-52", hibernateTypesVersion)
     implementation("org.telegram", "telegrambots", telegrambotsVersion)
     implementation("org.jsoup", "jsoup", jsoupVersion)
+    implementation("io.hypersistence", "hypersistence-utils-hibernate-63", "3.7.1")
 
     implementation("ch.qos.logback", "logback-classic", logbackVersion)
     implementation("jakarta.annotation", "jakarta.annotation-api")
@@ -34,11 +35,14 @@ dependencies {
 
     implementation("io.micronaut.data", "micronaut-data-hibernate-jpa")
     implementation("io.micronaut.liquibase", "micronaut-liquibase")
+    implementation("io.micronaut.serde", "micronaut-serde-jackson")
     implementation("io.micronaut.sql", "micronaut-hibernate-jpa")
     implementation("io.micronaut.sql", "micronaut-jdbc-hikari")
-    implementation("io.micronaut", "micronaut-validation")
+    implementation("io.micronaut", "micronaut-validation", "3.10.3")
 
     annotationProcessor("org.projectlombok", "lombok", lombokVersion)
+    annotationProcessor("io.micronaut.validation", "micronaut-validation-processor", "4.4.0")
+    annotationProcessor("io.micronaut.serde", "micronaut-serde-processor")
     annotationProcessor("io.micronaut.data", "micronaut-data-processor")
     annotationProcessor("io.micronaut", "micronaut-http-validation")
     annotationProcessor("io.micronaut", "micronaut-inject-java")

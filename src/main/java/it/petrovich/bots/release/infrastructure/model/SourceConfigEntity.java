@@ -6,17 +6,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.TypeDef;
-import org.hibernate.annotations.TypeDefs;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.type.PostgresUUIDType;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
@@ -26,12 +23,9 @@ import java.util.UUID;
 @ToString
 @NoArgsConstructor
 @Table(name = "release_config")
-@TypeDefs({
-        @TypeDef(name = "pg-uuid", defaultForType = UUID.class, typeClass = PostgresUUIDType.class)
-})
 public class SourceConfigEntity {
     @Id
-    @Column(columnDefinition = "pg-uuid")
+    @Column(columnDefinition = "uuid")
     @GeneratedValue(GeneratedValue.Type.AUTO)
     private UUID id;
     @CreationTimestamp

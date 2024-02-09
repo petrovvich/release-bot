@@ -11,7 +11,7 @@ import jakarta.inject.Singleton;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 import java.text.MessageFormat;
 
 @Slf4j
